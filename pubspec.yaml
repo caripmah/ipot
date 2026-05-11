@@ -1,0 +1,52 @@
+name: ipot_qr_ordering
+description: IPOT Customer QR Ordering App
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State management
+  flutter_bloc: ^9.0.0
+  equatable: ^2.0.7
+
+  # Navigation
+  go_router: ^14.8.0
+
+  # HTTP
+  dio: ^5.8.0
+
+  # Dependency injection
+  get_it: ^8.0.3
+
+  # Models
+  freezed_annotation: ^3.0.0
+  json_annotation: ^4.9.0
+
+  # QR Scanner
+  mobile_scanner: ^6.0.7
+
+  # Local storage
+  hive_flutter: ^1.1.0
+
+  # Utils
+  intl: ^0.20.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.15
+  freezed: ^3.0.6
+  json_serializable: ^6.9.5
+  bloc_test: ^10.0.0
+  mocktail: ^1.0.4
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
