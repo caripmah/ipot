@@ -4,7 +4,7 @@ part 'menu_models.freezed.dart';
 part 'menu_models.g.dart';
 
 @freezed
-class MenuResponse with _$MenuResponse {
+abstract class MenuResponse with _$MenuResponse {
   const factory MenuResponse({
     required Restaurant restaurant,
     required List<Category> categories,
@@ -16,7 +16,7 @@ class MenuResponse with _$MenuResponse {
 }
 
 @freezed
-class Restaurant with _$Restaurant {
+abstract class Restaurant with _$Restaurant {
   const factory Restaurant({
     required String id,
     required String name,
@@ -28,7 +28,7 @@ class Restaurant with _$Restaurant {
 }
 
 @freezed
-class Category with _$Category {
+abstract class Category with _$Category {
   const factory Category({
     required int id,
     required String name,
@@ -40,7 +40,7 @@ class Category with _$Category {
 }
 
 @freezed
-class MenuItem with _$MenuItem {
+abstract class MenuItem with _$MenuItem {
   const factory MenuItem({
     required int id,
     required String name,
@@ -58,11 +58,11 @@ class MenuItem with _$MenuItem {
 }
 
 @freezed
-class CustomizationGroup with _$CustomizationGroup {
+abstract class CustomizationGroup with _$CustomizationGroup {
   const factory CustomizationGroup({
     required int id,
     required String name,
-    required bool required,
+    @JsonKey(name: 'required') required bool isRequired,
     @JsonKey(name: 'max_selections') required int maxSelections,
     required List<CustomizationOption> options,
   }) = _CustomizationGroup;
@@ -72,7 +72,7 @@ class CustomizationGroup with _$CustomizationGroup {
 }
 
 @freezed
-class CustomizationOption with _$CustomizationOption {
+abstract class CustomizationOption with _$CustomizationOption {
   const factory CustomizationOption({
     required int id,
     required String name,

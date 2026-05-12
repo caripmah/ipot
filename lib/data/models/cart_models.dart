@@ -5,7 +5,7 @@ part 'cart_models.freezed.dart';
 part 'cart_models.g.dart';
 
 @freezed
-class CartItem with _$CartItem {
+abstract class CartItem with _$CartItem {
   const CartItem._(); // enables custom getters
 
   const factory CartItem({
@@ -30,7 +30,7 @@ class CartItem with _$CartItem {
 }
 
 @freezed
-class SelectedOption with _$SelectedOption {
+abstract class SelectedOption with _$SelectedOption {
   const factory SelectedOption({
     required int groupId,
     required CustomizationOption option,

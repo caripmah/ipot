@@ -28,7 +28,7 @@ extension OrderStatusX on OrderStatus {
 }
 
 @freezed
-class OrderRequest with _$OrderRequest {
+abstract class OrderRequest with _$OrderRequest {
   const factory OrderRequest({
     @JsonKey(name: 'table_id') required String tableId,
     required List<OrderItemRequest> items,
@@ -40,7 +40,7 @@ class OrderRequest with _$OrderRequest {
 }
 
 @freezed
-class OrderItemRequest with _$OrderItemRequest {
+abstract class OrderItemRequest with _$OrderItemRequest {
   const factory OrderItemRequest({
     @JsonKey(name: 'menu_item_id') required int menuItemId,
     required int quantity,
@@ -52,7 +52,7 @@ class OrderItemRequest with _$OrderItemRequest {
 }
 
 @freezed
-class OrderCustomizationRequest with _$OrderCustomizationRequest {
+abstract class OrderCustomizationRequest with _$OrderCustomizationRequest {
   const factory OrderCustomizationRequest({
     @JsonKey(name: 'option_id') required int optionId,
     required int quantity,
@@ -63,7 +63,7 @@ class OrderCustomizationRequest with _$OrderCustomizationRequest {
 }
 
 @freezed
-class Order with _$Order {
+abstract class Order with _$Order {
   const factory Order({
     required String id,
     @JsonKey(name: 'table_id') required String tableId,

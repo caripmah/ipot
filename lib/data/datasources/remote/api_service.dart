@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import '../models/menu_models.dart';
-import '../models/order_models.dart';
-import '../../core/utils/app_logger.dart';
+import 'package:ipot_qr_ordering/core/utils/app_logger.dart';
+import 'package:ipot_qr_ordering/data/models/menu_models.dart';
+import 'package:ipot_qr_ordering/data/models/order_models.dart';
 
 class ApiException implements Exception {
   final String message;
@@ -56,12 +56,15 @@ class ApiService {
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.receiveTimeout:
-        return const ApiException(message: 'Connection timed out. Please check your internet.');
+        return const ApiException(
+          message: 'Connection timed out. Please check your internet.',
+        );
       case DioExceptionType.connectionError:
         return const ApiException(message: 'No internet connection.');
       case DioExceptionType.badResponse:
         final statusCode = e.response?.statusCode;
-        final message = e.response?.data?['message'] as String? ?? 'Server error';
+        final message =
+            e.response?.data?['message'] as String? ?? 'Server error';
         return ApiException(message: message, statusCode: statusCode);
       default:
         return ApiException(message: e.message ?? 'Unexpected error occurred.');

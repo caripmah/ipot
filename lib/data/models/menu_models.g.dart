@@ -79,7 +79,7 @@ _CustomizationGroup _$CustomizationGroupFromJson(Map<String, dynamic> json) =>
     _CustomizationGroup(
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
-      required: json['required'] as bool,
+      isRequired: json['required'] as bool,
       maxSelections: (json['max_selections'] as num).toInt(),
       options: (json['options'] as List<dynamic>)
           .map((e) => CustomizationOption.fromJson(e as Map<String, dynamic>))
@@ -90,7 +90,7 @@ Map<String, dynamic> _$CustomizationGroupToJson(_CustomizationGroup instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'required': instance.required,
+      'required': instance.isRequired,
       'max_selections': instance.maxSelections,
       'options': instance.options,
     };

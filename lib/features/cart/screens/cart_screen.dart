@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../bloc/cart_cubit.dart';
+import '../../../data/models/cart_models.dart';
 import '../../../core/di/injection.dart';
 import '../../../core/utils/currency_formatter.dart';
 
@@ -79,13 +80,13 @@ class CartScreen extends StatelessWidget {
 }
 
 class _CartItemTile extends StatelessWidget {
-  final cartItem;
+  final CartItem item;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
   final VoidCallback onRemove;
 
   const _CartItemTile({
-    required this.cartItem,
+    required this.item,
     required this.onIncrement,
     required this.onDecrement,
     required this.onRemove,
@@ -104,7 +105,7 @@ class _CartItemTile extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    cartItem.menuItem.name,
+                    item.menuItem.name,
                     style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -117,11 +118,11 @@ class _CartItemTile extends StatelessWidget {
               ],
             ),
             // Customizations
-            if (cartItem.selectedOptions.isNotEmpty)
+            if (item.selectedOptions.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 2, bottom: 4),
                 child: Text(
-                  cartItem.selectedOptions
+                  item.selectedOptions
                       .map((o) => o.option.name)
                       .join(', '),
                   style: TextStyle(fontSize: 12, color: Colors.grey[600]),
@@ -131,7 +132,7 @@ class _CartItemTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  CurrencyFormatter.format(cartItem.totalPrice),
+                  CurrencyFormatter.format(item.totalPrice),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).colorScheme.primary,
@@ -146,7 +147,7 @@ class _CartItemTile extends StatelessWidget {
                     SizedBox(
                       width: 32,
                       child: Text(
-                        '${cartItem.quantity}',
+                        '${item.quantity}',
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontWeight: FontWeight.w600),
                       ),

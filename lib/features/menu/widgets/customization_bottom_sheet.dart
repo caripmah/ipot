@@ -110,7 +110,7 @@ class _CustomizationBottomSheetState extends State<CustomizationBottomSheet> {
   bool get _canAdd {
     // All required groups must have a selection
     return widget.item.customizationGroups
-        .where((g) => g.required)
+        .where((g) => g.isRequired)
         .every((g) => _selections[g.id]?.isNotEmpty == true);
   }
 
@@ -188,7 +188,7 @@ class _GroupSection extends StatelessWidget {
                     .titleSmall
                     ?.copyWith(fontWeight: FontWeight.w600)),
             const SizedBox(width: 8),
-            if (group.required)
+            if (group.isRequired)
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -202,7 +202,7 @@ class _GroupSection extends StatelessWidget {
                         color:
                             Theme.of(context).colorScheme.onErrorContainer)),
               ),
-            if (!group.required)
+            if (!group.isRequired)
               Text(' (Optional)',
                   style: Theme.of(context)
                       .textTheme

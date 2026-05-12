@@ -1139,7 +1139,7 @@ as List<CustomizationGroup>,
 /// @nodoc
 mixin _$CustomizationGroup {
 
- int get id; String get name; bool get required;@JsonKey(name: 'max_selections') int get maxSelections; List<CustomizationOption> get options;
+ int get id; String get name;@JsonKey(name: 'required') bool get isRequired;@JsonKey(name: 'max_selections') int get maxSelections; List<CustomizationOption> get options;
 /// Create a copy of CustomizationGroup
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1152,16 +1152,16 @@ $CustomizationGroupCopyWith<CustomizationGroup> get copyWith => _$CustomizationG
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CustomizationGroup&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.required, required) || other.required == required)&&(identical(other.maxSelections, maxSelections) || other.maxSelections == maxSelections)&&const DeepCollectionEquality().equals(other.options, options));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CustomizationGroup&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.isRequired, isRequired) || other.isRequired == isRequired)&&(identical(other.maxSelections, maxSelections) || other.maxSelections == maxSelections)&&const DeepCollectionEquality().equals(other.options, options));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,required,maxSelections,const DeepCollectionEquality().hash(options));
+int get hashCode => Object.hash(runtimeType,id,name,isRequired,maxSelections,const DeepCollectionEquality().hash(options));
 
 @override
 String toString() {
-  return 'CustomizationGroup(id: $id, name: $name, required: $required, maxSelections: $maxSelections, options: $options)';
+  return 'CustomizationGroup(id: $id, name: $name, isRequired: $isRequired, maxSelections: $maxSelections, options: $options)';
 }
 
 
@@ -1172,7 +1172,7 @@ abstract mixin class $CustomizationGroupCopyWith<$Res>  {
   factory $CustomizationGroupCopyWith(CustomizationGroup value, $Res Function(CustomizationGroup) _then) = _$CustomizationGroupCopyWithImpl;
 @useResult
 $Res call({
- int id, String name, bool required,@JsonKey(name: 'max_selections') int maxSelections, List<CustomizationOption> options
+ int id, String name,@JsonKey(name: 'required') bool isRequired,@JsonKey(name: 'max_selections') int maxSelections, List<CustomizationOption> options
 });
 
 
@@ -1189,11 +1189,11 @@ class _$CustomizationGroupCopyWithImpl<$Res>
 
 /// Create a copy of CustomizationGroup
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? required = null,Object? maxSelections = null,Object? options = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? isRequired = null,Object? maxSelections = null,Object? options = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,required: null == required ? _self.required : required // ignore: cast_nullable_to_non_nullable
+as String,isRequired: null == isRequired ? _self.isRequired : isRequired // ignore: cast_nullable_to_non_nullable
 as bool,maxSelections: null == maxSelections ? _self.maxSelections : maxSelections // ignore: cast_nullable_to_non_nullable
 as int,options: null == options ? _self.options : options // ignore: cast_nullable_to_non_nullable
 as List<CustomizationOption>,
@@ -1281,10 +1281,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  bool required, @JsonKey(name: 'max_selections')  int maxSelections,  List<CustomizationOption> options)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name, @JsonKey(name: 'required')  bool isRequired, @JsonKey(name: 'max_selections')  int maxSelections,  List<CustomizationOption> options)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomizationGroup() when $default != null:
-return $default(_that.id,_that.name,_that.required,_that.maxSelections,_that.options);case _:
+return $default(_that.id,_that.name,_that.isRequired,_that.maxSelections,_that.options);case _:
   return orElse();
 
 }
@@ -1302,10 +1302,10 @@ return $default(_that.id,_that.name,_that.required,_that.maxSelections,_that.opt
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  bool required, @JsonKey(name: 'max_selections')  int maxSelections,  List<CustomizationOption> options)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name, @JsonKey(name: 'required')  bool isRequired, @JsonKey(name: 'max_selections')  int maxSelections,  List<CustomizationOption> options)  $default,) {final _that = this;
 switch (_that) {
 case _CustomizationGroup():
-return $default(_that.id,_that.name,_that.required,_that.maxSelections,_that.options);case _:
+return $default(_that.id,_that.name,_that.isRequired,_that.maxSelections,_that.options);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1322,10 +1322,10 @@ return $default(_that.id,_that.name,_that.required,_that.maxSelections,_that.opt
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  bool required, @JsonKey(name: 'max_selections')  int maxSelections,  List<CustomizationOption> options)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name, @JsonKey(name: 'required')  bool isRequired, @JsonKey(name: 'max_selections')  int maxSelections,  List<CustomizationOption> options)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomizationGroup() when $default != null:
-return $default(_that.id,_that.name,_that.required,_that.maxSelections,_that.options);case _:
+return $default(_that.id,_that.name,_that.isRequired,_that.maxSelections,_that.options);case _:
   return null;
 
 }
@@ -1337,12 +1337,12 @@ return $default(_that.id,_that.name,_that.required,_that.maxSelections,_that.opt
 @JsonSerializable()
 
 class _CustomizationGroup implements CustomizationGroup {
-  const _CustomizationGroup({required this.id, required this.name, required this.required, @JsonKey(name: 'max_selections') required this.maxSelections, required final  List<CustomizationOption> options}): _options = options;
+  const _CustomizationGroup({required this.id, required this.name, @JsonKey(name: 'required') required this.isRequired, @JsonKey(name: 'max_selections') required this.maxSelections, required final  List<CustomizationOption> options}): _options = options;
   factory _CustomizationGroup.fromJson(Map<String, dynamic> json) => _$CustomizationGroupFromJson(json);
 
 @override final  int id;
 @override final  String name;
-@override final  bool required;
+@override@JsonKey(name: 'required') final  bool isRequired;
 @override@JsonKey(name: 'max_selections') final  int maxSelections;
  final  List<CustomizationOption> _options;
 @override List<CustomizationOption> get options {
@@ -1365,16 +1365,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CustomizationGroup&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.required, required) || other.required == required)&&(identical(other.maxSelections, maxSelections) || other.maxSelections == maxSelections)&&const DeepCollectionEquality().equals(other._options, _options));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CustomizationGroup&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.isRequired, isRequired) || other.isRequired == isRequired)&&(identical(other.maxSelections, maxSelections) || other.maxSelections == maxSelections)&&const DeepCollectionEquality().equals(other._options, _options));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,required,maxSelections,const DeepCollectionEquality().hash(_options));
+int get hashCode => Object.hash(runtimeType,id,name,isRequired,maxSelections,const DeepCollectionEquality().hash(_options));
 
 @override
 String toString() {
-  return 'CustomizationGroup(id: $id, name: $name, required: $required, maxSelections: $maxSelections, options: $options)';
+  return 'CustomizationGroup(id: $id, name: $name, isRequired: $isRequired, maxSelections: $maxSelections, options: $options)';
 }
 
 
@@ -1385,7 +1385,7 @@ abstract mixin class _$CustomizationGroupCopyWith<$Res> implements $Customizatio
   factory _$CustomizationGroupCopyWith(_CustomizationGroup value, $Res Function(_CustomizationGroup) _then) = __$CustomizationGroupCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name, bool required,@JsonKey(name: 'max_selections') int maxSelections, List<CustomizationOption> options
+ int id, String name,@JsonKey(name: 'required') bool isRequired,@JsonKey(name: 'max_selections') int maxSelections, List<CustomizationOption> options
 });
 
 
@@ -1402,11 +1402,11 @@ class __$CustomizationGroupCopyWithImpl<$Res>
 
 /// Create a copy of CustomizationGroup
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? required = null,Object? maxSelections = null,Object? options = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? isRequired = null,Object? maxSelections = null,Object? options = null,}) {
   return _then(_CustomizationGroup(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,required: null == required ? _self.required : required // ignore: cast_nullable_to_non_nullable
+as String,isRequired: null == isRequired ? _self.isRequired : isRequired // ignore: cast_nullable_to_non_nullable
 as bool,maxSelections: null == maxSelections ? _self.maxSelections : maxSelections // ignore: cast_nullable_to_non_nullable
 as int,options: null == options ? _self._options : options // ignore: cast_nullable_to_non_nullable
 as List<CustomizationOption>,
