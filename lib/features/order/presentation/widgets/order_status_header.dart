@@ -24,26 +24,6 @@ class OrderStatusHeader extends StatelessWidget {
           // Top row
           Row(
             children: [
-              GestureDetector(
-                onTap: () => context.go('/scanner'),
-                child: Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(14),
-                    boxShadow: [
-                      BoxShadow(
-                        color: kPrimary.withValues(alpha: 0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: const Icon(Icons.home_outlined,
-                      color: kPrimary, size: 20),
-                ),
-              ),
               const Spacer(),
             ],
           ),
