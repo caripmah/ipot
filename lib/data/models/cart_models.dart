@@ -9,7 +9,7 @@ abstract class CartItem with _$CartItem {
   const CartItem._(); // enables custom getters
 
   const factory CartItem({
-    required String id, // uuid: "${menuItem.id}_${selectedOptions.hashCode}"
+    required String id,
     required MenuItem menuItem,
     required int quantity,
     @Default([]) List<SelectedOption> selectedOptions,

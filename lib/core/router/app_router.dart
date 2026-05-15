@@ -1,72 +1,72 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../features/scanner/screens/scanner_screen.dart';
-import '../../features/menu/screens/menu_screen.dart';
-import '../../features/cart/screens/cart_screen.dart';
-import '../../features/order/screens/order_confirmation_screen.dart';
-import '../../features/order/screens/order_tracking_screen.dart';
-import '../di/injection.dart';
-import '../../features/menu/bloc/menu_bloc.dart';
-import '../../features/order/bloc/order_bloc.dart';
-import '../../features/scanner/bloc/scanner_cubit.dart';
-import '../../features/cart/bloc/cart_cubit.dart';
-
-abstract class AppRoutes {
-  static const scanner = '/';
-  static const menu = '/menu/:tableId';
-  static const cart = '/cart';
-  static const orderConfirmation = '/order/confirmation';
-  static const orderTracking = '/order/:orderId/tracking';
-}
+import '../../features/splash/presentation/splash_screen.dart';
+import '../../features/scanner/presentation/scanner_screen.dart';
+import '../../features/menu/presentation/menu_screen.dart';
+import '../../features/cart/presentation/cart_screen.dart';
+import '../../features/order/presentation/order_status_screen.dart';
 
 final appRouter = GoRouter(
-  initialLocation: AppRoutes.scanner,
+  initialLocation: '/',
+  debugLogDiagnostics: true,
   routes: [
     GoRoute(
-      path: AppRoutes.scanner,
-      builder: (context, state) => BlocProvider(
-        create: (_) => getIt<ScannerCubit>(),
+      path: '/',
+      builder: (context, state) => const SplashScreen(),
+    ),
+    GoRoute(
+      path: '/scanner',
+      pageBuilder: (context, state) => _buildPageWithTransition(
         child: const ScannerScreen(),
+        state: state,
       ),
     ),
     GoRoute(
-      path: AppRoutes.menu,
-      builder: (context, state) {
-        final tableId = state.pathParameters['tableId']!;
-        return BlocProvider(
-          create: (_) => getIt<MenuBloc>()
-            ..add(MenuFetchRequested(tableId)),
+      path: '/menu/:tableId',
+      pageBuilder: (context, state) {
+        final tableId = state.pathParameters['tableId'] ?? '';
+        return _buildPageWithTransition(
           child: MenuScreen(tableId: tableId),
+          state: state,
         );
       },
     ),
     GoRoute(
-      path: AppRoutes.cart,
-      builder: (context, state) => const CartScreen(),
+      path: '/cart',
+      pageBuilder: (context, state) => _buildPageWithTransition(
+        child: const CartScreen(),
+        state: state,
+      ),
     ),
     GoRoute(
-      path: AppRoutes.orderConfirmation,
-      builder: (context, state) {
-        final extra = state.extra as Map<String, dynamic>;
-        return BlocProvider(
-          create: (_) => getIt<OrderBloc>(),
-          child: OrderConfirmationScreen(
-            tableId: extra['tableId'] as String,
-          ),
-        );
-      },
-    ),
-    GoRoute(
-      path: AppRoutes.orderTracking,
-      builder: (context, state) {
-        final orderId = state.pathParameters['orderId']!;
-        return BlocProvider(
-          create: (_) => getIt<OrderBloc>()
-            ..add(OrderPollingStarted(orderId)),
-          child: OrderTrackingScreen(orderId: orderId),
+      path: '/order/:orderId',
+      pageBuilder: (context, state) {
+        final orderId = state.pathParameters['orderId'] ?? '';
+        return _buildPageWithTransition(
+          child: OrderStatusScreen(orderId: orderId),
+          state: state,
         );
       },
     ),
   ],
 );
+
+CustomTransitionPage _buildPageWithTransition({
+  required Widget child,
+  required GoRouterState state,
+}) {
+  return CustomTransitionPage(
+    key: state.pageKey,
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return FadeTransition(
+        opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+        child: ScaleTransition(
+          scale: Tween<double>(begin: 0.98, end: 1.0).animate(animation),
+          child: child,
+        ),
+      );
+    },
+    transitionDuration: const Duration(milliseconds: 400),
+  );
+}

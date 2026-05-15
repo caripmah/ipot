@@ -1,67 +1,43 @@
-import 'dart:convert';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../data/datasources/remote/api_service.dart';
-import '../../data/models/menu_models.dart';
-import '../../core/utils/app_logger.dart';
+import '../datasources/remote/api_service.dart';
+import '../datasources/local/menu_dummy_data.dart';
+import '../models/menu_models.dart';
 
 abstract class MenuRepository {
   Future<MenuResponse> getMenu(String tableId);
 }
 
 class MenuRepositoryImpl implements MenuRepository {
-  final ApiService _apiService;
-  final Box _cacheBox;
+  final ApiService apiService;
+  final Box cacheBox;
 
   MenuRepositoryImpl({
-    required ApiService apiService,
-    required Box cacheBox,
-  })  : _apiService = apiService,
-        _cacheBox = cacheBox;
-
-  static const _cachePrefix = 'menu_';
-  static const _cacheDuration = Duration(minutes: 30);
+    required this.apiService,
+    required this.cacheBox,
+  });
 
   @override
   Future<MenuResponse> getMenu(String tableId) async {
-    // Try network first
     try {
-      final response = await _apiService.getMenu(tableId);
-      _saveToCache(tableId, response);
+      final response = await apiService.getMenu(tableId);
+      // Optional: cache the response
+      await cacheBox.put('last_menu_$tableId', response.toJson());
       return response;
-    } on ApiException catch (e) {
-      AppLogger.warning('Network failed, trying cache: ${e.message}');
-      // Fall back to cache on network error
-      final cached = _loadFromCache(tableId);
-      if (cached != null) return cached;
-      rethrow;
-    }
-  }
-
-  void _saveToCache(String tableId, MenuResponse response) {
-    try {
-      _cacheBox.put('$_cachePrefix$tableId', {
-        'data': jsonEncode(response.toJson()),
-        'timestamp': DateTime.now().millisecondsSinceEpoch,
-      });
     } catch (e) {
-      AppLogger.warning('Cache save failed: $e');
-    }
-  }
+      // Try to get from cache if offline
+      final cachedData = cacheBox.get('last_menu_$tableId');
+      if (cachedData != null) {
+        return MenuResponse.fromJson(Map<String, dynamic>.from(cachedData));
+      }
 
-  MenuResponse? _loadFromCache(String tableId) {
-    try {
-      final cached = _cacheBox.get('$_cachePrefix$tableId') as Map?;
-      if (cached == null) return null;
-
-      final timestamp = cached['timestamp'] as int;
-      final age = DateTime.now().millisecondsSinceEpoch - timestamp;
-      if (age > _cacheDuration.inMilliseconds) return null;
-
-      final json = jsonDecode(cached['data'] as String) as Map<String, dynamic>;
-      return MenuResponse.fromJson(json);
-    } catch (e) {
-      AppLogger.warning('Cache read failed: $e');
-      return null;
+      // Final fallback: Use hardcoded dummy data if no cache exists
+      // (This ensures the app works even on the very first offline scan)
+      final fallbackData = Map<String, dynamic>.from(menuDummyData);
+      final restaurant = Map<String, dynamic>.from(fallbackData['restaurant'] as Map);
+      restaurant['table_id'] = tableId;
+      fallbackData['restaurant'] = restaurant;
+      
+      return MenuResponse.fromJson(fallbackData);
     }
   }
 }

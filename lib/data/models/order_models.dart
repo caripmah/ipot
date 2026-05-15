@@ -22,9 +22,7 @@ extension OrderStatusX on OrderStatus {
     }
   }
 
-  int get stepIndex {
-    return OrderStatus.values.indexOf(this);
-  }
+  int get stepIndex => OrderStatus.values.indexOf(this);
 }
 
 @freezed

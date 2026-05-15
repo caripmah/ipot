@@ -62,7 +62,7 @@ abstract class CustomizationGroup with _$CustomizationGroup {
   const factory CustomizationGroup({
     required int id,
     required String name,
-    @JsonKey(name: 'required') required bool isRequired,
+    required bool required,
     @JsonKey(name: 'max_selections') required int maxSelections,
     required List<CustomizationOption> options,
   }) = _CustomizationGroup;

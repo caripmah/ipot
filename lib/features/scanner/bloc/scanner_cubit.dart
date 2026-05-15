@@ -1,10 +1,13 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-// ─── State ────────────────────────────────────────────────────────────────────
+// ============================================
+// STATES
+// ============================================
 
 abstract class ScannerState extends Equatable {
   const ScannerState();
+
   @override
   List<Object?> get props => [];
 }
@@ -19,6 +22,7 @@ class ScannerProcessing extends ScannerState {
 
 class ScannerSuccess extends ScannerState {
   final String tableId;
+
   const ScannerSuccess(this.tableId);
 
   @override
@@ -27,38 +31,43 @@ class ScannerSuccess extends ScannerState {
 
 class ScannerError extends ScannerState {
   final String message;
+
   const ScannerError(this.message);
 
   @override
   List<Object?> get props => [message];
 }
 
-// ─── Cubit ────────────────────────────────────────────────────────────────────
+// ============================================
+// CUBIT
+// ============================================
 
 class ScannerCubit extends Cubit<ScannerState> {
   ScannerCubit() : super(const ScannerReady());
 
-  static final _qrPattern = RegExp(r'^ipot://table/(.+)$');
+  /// Flag untuk mencegah emit state setelah berhasil scan
+  bool _isClosed = false;
 
-  void processQrCode(String rawValue) {
+  void processQrCode(String qrCode) {
+    if (_isClosed) return;
+
     emit(const ScannerProcessing());
 
-    final match = _qrPattern.firstMatch(rawValue);
-    if (match == null) {
-      emit(const ScannerError(
-        'Invalid QR code. Please scan a valid table QR code.',
-      ));
-      return;
+    if (qrCode.startsWith('ipot://table/')) {
+      final tableId = qrCode.replaceFirst('ipot://table/', '');
+      if (tableId.isNotEmpty) {
+        _isClosed = true;
+        emit(ScannerSuccess(tableId));
+      } else {
+        emit(const ScannerError('Invalid table ID in QR code'));
+      }
+    } else {
+      emit(const ScannerError('Invalid QR code format'));
     }
-
-    final tableId = match.group(1)?.trim() ?? '';
-    if (tableId.isEmpty) {
-      emit(const ScannerError('QR code contains an empty table ID.'));
-      return;
-    }
-
-    emit(ScannerSuccess(tableId));
   }
 
-  void reset() => emit(const ScannerReady());
+  void reset() {
+    _isClosed = false;
+    emit(const ScannerReady());
+  }
 }

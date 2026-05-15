@@ -1,17 +1,15 @@
-import 'package:flutter/foundation.dart';
+import 'dart:developer' as dev;
 
 class AppLogger {
-  AppLogger._();
-
-  static void info(String message) {
-    if (kDebugMode) debugPrint('[INFO] $message');
+  static void d(String message) {
+    dev.log('DEBUG: $message', name: 'APP');
   }
 
-  static void warning(String message) {
-    if (kDebugMode) debugPrint('[WARN] $message');
+  static void e(String message, [Object? error, StackTrace? stackTrace]) {
+    dev.log('ERROR: $message', name: 'APP', error: error, stackTrace: stackTrace);
   }
 
-  static void error(String message, [Object? error]) {
-    if (kDebugMode) debugPrint('[ERROR] $message${error != null ? ': $error' : ''}');
+  static void i(String message) {
+    dev.log('INFO: $message', name: 'APP');
   }
 }

@@ -1,5 +1,5 @@
-import '../../data/datasources/remote/api_service.dart';
-import '../../data/models/order_models.dart';
+import '../datasources/remote/api_service.dart';
+import '../models/order_models.dart';
 
 abstract class OrderRepository {
   Future<Order> createOrder(OrderRequest request);
@@ -7,16 +7,17 @@ abstract class OrderRepository {
 }
 
 class OrderRepositoryImpl implements OrderRepository {
-  final ApiService _apiService;
+  final ApiService apiService;
 
-  OrderRepositoryImpl({required ApiService apiService})
-      : _apiService = apiService;
-
-  @override
-  Future<Order> createOrder(OrderRequest request) =>
-      _apiService.createOrder(request);
+  OrderRepositoryImpl({required this.apiService});
 
   @override
-  Future<Order> getOrderStatus(String orderId) =>
-      _apiService.getOrderStatus(orderId);
+  Future<Order> createOrder(OrderRequest request) async {
+    return apiService.createOrder(request);
+  }
+
+  @override
+  Future<Order> getOrderStatus(String orderId) async {
+    return apiService.getOrderStatus(orderId);
+  }
 }

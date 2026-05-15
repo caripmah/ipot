@@ -15,8 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CartItem {
 
- String get id;// uuid: "${menuItem.id}_${selectedOptions.hashCode}"
- MenuItem get menuItem; int get quantity; List<SelectedOption> get selectedOptions; String? get note;
+ String get id; MenuItem get menuItem; int get quantity; List<SelectedOption> get selectedOptions; String? get note;
 /// Create a copy of CartItem
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -227,7 +226,6 @@ class _CartItem extends CartItem {
   factory _CartItem.fromJson(Map<String, dynamic> json) => _$CartItemFromJson(json);
 
 @override final  String id;
-// uuid: "${menuItem.id}_${selectedOptions.hashCode}"
 @override final  MenuItem menuItem;
 @override final  int quantity;
  final  List<SelectedOption> _selectedOptions;
