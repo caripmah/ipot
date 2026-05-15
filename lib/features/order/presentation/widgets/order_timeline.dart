@@ -10,7 +10,8 @@ class OrderTimeline extends StatefulWidget {
   State<OrderTimeline> createState() => _OrderTimelineState();
 }
 
-class _OrderTimelineState extends State<OrderTimeline> with SingleTickerProviderStateMixin {
+class _OrderTimelineState extends State<OrderTimeline>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -86,15 +87,18 @@ class _OrderTimelineState extends State<OrderTimeline> with SingleTickerProvider
                               boxShadow: isCurrent
                                   ? [
                                       BoxShadow(
-                                        color: kAccent.withValues(alpha: 0.3 * _controller.value),
-                                        blurRadius: 10 + (10 * _controller.value),
+                                        color: kAccent.withValues(
+                                            alpha: 0.3 * _controller.value),
+                                        blurRadius:
+                                            10 + (10 * _controller.value),
                                         spreadRadius: 2 * _controller.value,
                                       ),
                                     ]
                                   : null,
                             ),
                             child: isCompleted
-                                ? const Icon(Icons.check_rounded, size: 18, color: Colors.white)
+                                ? const Icon(Icons.check_rounded,
+                                    size: 18, color: Colors.white)
                                 : isCurrent
                                     ? Center(
                                         child: Container(
@@ -140,7 +144,8 @@ class _OrderTimelineState extends State<OrderTimeline> with SingleTickerProvider
                         Text(
                           status.label,
                           style: TextStyle(
-                            fontWeight: isCurrent ? FontWeight.w900 : FontWeight.w700,
+                            fontWeight:
+                                isCurrent ? FontWeight.w900 : FontWeight.w700,
                             color: isCurrent
                                 ? kPrimary
                                 : isCompleted

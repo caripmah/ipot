@@ -21,48 +21,53 @@ class OrderStatusHeader extends StatelessWidget {
       child: Column(
         children: [
           // Top row
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () => Navigator.of(context).maybePop(),
-                child: Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(14),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x0D0A1128),
-                        blurRadius: 10,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
+          SizedBox(
+            height: 80,
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () => Navigator.of(context).maybePop(),
+                  child: Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x0D0A1128),
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(Icons.home_outlined,
+                        color: kPrimary, size: 20),
                   ),
-                  child: const Icon(Icons.home_outlined, color: kPrimary, size: 20),
                 ),
-              ),
-              const Spacer(),
-              GestureDetector(
-                onTap: onRefresh,
-                child: Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(14),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x0D0A1128),
-                        blurRadius: 10,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
+                const Spacer(),
+                GestureDetector(
+                  onTap: onRefresh,
+                  child: Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x0D0A1128),
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(Icons.refresh_rounded,
+                        color: kPrimary, size: 20),
                   ),
-                  child: const Icon(Icons.refresh_rounded, color: kPrimary, size: 20),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 24),
 
