@@ -27,7 +27,7 @@ class OrderStatusHeader extends StatelessWidget {
               const Spacer(),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 30),
 
           // Order card with gradient
           Container(
