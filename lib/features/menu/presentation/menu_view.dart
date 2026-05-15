@@ -75,11 +75,12 @@ class MenuView extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.search_off,
+                            Icon(Icons.search_off,
                                 size: 64, color: Colors.grey),
                             const SizedBox(height: 16),
-                            const Text('No items found',
+                            Text('No items found',
                                 style: TextStyle(color: Colors.grey)),
+
                           ],
                         ),
                       ),
@@ -185,7 +186,7 @@ class MenuView extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.table_restaurant, color: Colors.white, size: 14),
+                        Icon(Icons.table_restaurant, color: Colors.white, size: 14),
                         const SizedBox(width: 6),
                         Text(
                           'Table $tableId',
@@ -218,7 +219,7 @@ class MenuView extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.search, color: Colors.white70),
+                    Icon(Icons.search, color: Colors.white70),
                     const SizedBox(width: 12),
                     Expanded(
                       child: TextField(
